@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gérez vos transactions et factures facilement avec BitPay Coin, une plateforme sécurisée et rapide.">
+    <meta http-equiv="Content-Language" content="fr">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="BitPay Coin - Gestion des transactions">
+    <meta property="og:description" content="Gérez vos transactions et factures facilement avec BitPay Coin, une plateforme sécurisée et rapide.">
+    <meta property="og:image" content="{{ url_for('static', filename='images/social-preview.jpg') }}">
+    <meta property="og:url" content="https://www.votre-website.com">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="BitPay Coin - Gestion des transactions">
+    <meta name="twitter:description" content="Gérez vos transactions et factures facilement avec BitPay Coin, une plateforme sécurisée et rapide.">
+    <meta name="twitter:image" content="{{ url_for('static', filename='images/social-preview.jpg') }}">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Styles et Icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+
+    <title>BitPay Coin - Gestion des transactions</title>
+
+   <!-- ======================= -->
+<!-- 🔷 NAVBAR NEON COMPLETE -->
+<!-- ======================= -->
+<header class="navbar">
+    <style>
+      /* === Navbar Principale === */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: #001f3f;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+        padding: 12px 24px;
+        display: flex;
+        justify-content: center; /* Centrer le contenu */
+        align-items: center;
+        border-bottom: 1px solid #00ffff;
+      }
+  
+      .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 1200px; /* Fixer une largeur maximale pour mieux centrer */
+        padding: 0 20px;
+      }
+  
+      .navbar-title {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #00ffff;
+        text-shadow: 0 0 8px #00ffff, 0 0 16px #00ffff;
+      }
+  
+      .navbar-title .highlight {
+        color: #ff7b00;
+      }
+  
+      .toggle-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+      }
+  
+      .toggle-btn img {
+        height: 44px;
+        width: 44px;
+        border-radius: 50%;
+        background-color: #f9f9f9;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+  
+      .toggle-btn img:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px #00ffff;
+      }
+  
+      /* === Sous-menu === */
+      .sub-navbar {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: rgba(0, 31, 63, 0.95);
+        padding: 15px 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        flex-direction: column;
+        gap: 15px;
+        transition: all 0.3s ease;
+      }
+  
+      .sub-navbar.visible {
+        display: flex;
+      }
+  
+      .sub-navbar ul {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+  
+      .sub-navbar li a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 8px;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+      }
+  
+      .sub-navbar li a:hover {
+        background-color: #00ffff22;
+      }
+  
+      .sub-navbar img {
+        height: 28px;
+        width: 28px;
+        filter: drop-shadow(0 0 4px #00ffff);
+        transition: transform 0.2s ease;
+      }
+  
+      .sub-navbar li a:hover img {
+        transform: scale(1.1);
+      }
+  
+      /* === Responsive === */
+      @media (max-width: 768px) {
+        .navbar-title {
+          font-size: 1.8rem;
+        }
+  
+        .sub-navbar {
+          right: 10px;
+          width: 85%;
+          max-width: 320px;
+        }
+  
+        .sub-navbar ul {
+          gap: 10px;
+        }
+  
+        .sub-navbar img {
+          height: 26px;
+          width: 26px;
+        }
+      }
+    </style>
+  
+    <!-- Contenu de la barre -->
+    <div class="navbar-container">
+      <h1 class="navbar-title"><span class="highlight">BitPay</span> Coin</h1>
+  
+      <button class="toggle-btn" onclick="toggleSubMenu()" aria-label="Ouvrir le menu">
+        <img src="{{ url_for('static', filename='images/bitcoin-icon.png') }}" alt="Menu Bitcoin">
+      </button>
+    </div>
+  
+    <!-- Sous-menu -->
+    <nav class="sub-navbar" id="sub-navbar">
+      <ul>
+        <li><a href="/solde"><img src="{{ url_for('static', filename='images/wallet-icon.png') }}" alt="Solde">Solde</a></li>
+        <li><a href="/transactions"><img src="{{ url_for('static', filename='images/transactions-icon.png') }}" alt="Transactions">Transactions</a></li>
+        <li><a href="/factures"><img src="{{ url_for('static', filename='images/exchange-icon.png') }}" alt="Factures">Factures</a></li>
+        <li><a href="/scanner"><img src="{{ url_for('static', filename='images/network-icon.png') }}" alt="Réseau">Réseau</a></li>
+        <li><a href="/index"><img src="{{ url_for('static', filename='images/home-icon.png') }}" alt="Accueil">Accueil</a></li>
+      </ul>
+    </nav>
+  
+    <!-- Script toggle -->
+    <script>
+      function toggleSubMenu() {
+        const menu = document.getElementById("sub-navbar");
+        menu.classList.toggle("visible");
+      }
+    </script>
+  </header>
+  
+  
+
+<main class="page-container">
+    {% block content %}{% endblock %}
+    <footer>
+        <p>&copy; 2024 Bitpaycoin. ALL RIGHTS RESERVED.</p>
+    </footer>
+</main>
+
+<script>
+    // Fonction pour toggle la visibilité du sous-menu
+    function toggleSubMenu() {
+        const subMenu = document.getElementById('sub-navbar');
+        subMenu.classList.toggle('visible');
+    }
+
+    // Réduire la navbar sur scroll
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+            navbar.classList.toggle('shrink', window.scrollY > 50);
+        }
+    });
+</script>
+
+</body>
+</html>

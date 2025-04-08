@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+
+{% block title %}Accueil - BitPay Coin{% endblock %}
+
+{% block content %}
+<main class="welcome-container">
+    <section class="welcome-content">
+        <h1 class="welcome-title">Bienvenue sur <span class="highlight">BitPay Coin</span></h1>
+        <p class="welcome-description">
+            Gérez vos transactions et factures en toute simplicité avec notre plateforme sécurisée.
+        </p>
+
+        <nav class="navigation-grid">
+            {% set features = [
+                {
+                    'href': url_for('solde'),
+                    'icon': url_for('static', filename='images/wallet-icon.png'),
+                    'title': 'Voir le Solde',
+                    'subtitle': 'Consultez votre balance actuelle'
+                },
+                {
+                    'href': url_for('transactions'),
+                    'icon': url_for('static', filename='images/transactions-icon.png'),
+                    'title': 'Historique',
+                    'subtitle': 'Suivez vos transactions'
+                },
+                {
+                    'href': url_for('scanner'),
+                    'icon': url_for('static', filename='images/qr-icon.png'),
+                    'title': 'Scanner QR',
+                    'subtitle': 'Scannez pour payer'
+                },
+                {
+                    'href': url_for('facture'),
+                    'icon': url_for('static', filename='images/facture-icon.png'),
+                    'title': 'Factures',
+                    'subtitle': 'Gérez vos factures'
+                }
+            ] %}
+
+            {% for feature in features %}
+            <a href="{{ feature.href }}" class="nav-card">
+                <img src="{{ feature.icon }}" alt="Icône {{ feature.title }}" class="nav-icon"/>
+                <div class="nav-text">
+                    <span class="nav-title">{{ feature.title }}</span>
+                    <span class="nav-subtitle">{{ feature.subtitle }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </nav>
+    </section>
+</main>
+
+<section class="hero">
+    <div class="content">
+        <h2>RÉVOLUTION BLOCKCHAIN</h2>
+        <p>Investissez dans la technologie décentralisée – Sécurité, transparence et liberté financière.</p>
+        <a href="#features" class="btn">En savoir plus</a>
+    </div>
+</section>
+
+<section id="features" class="features">
+    {% set feature_list = [
+        {
+            'title': 'Sécurité & Transparence',
+            'description': 'Des transactions immuables et cryptées pour une confiance absolue.'
+        },
+        {
+            'title': 'Applications Décentralisées',
+            'description': 'Des services autonomes sans intermédiaire pour une économie plus libre.'
+        },
+        {
+            'title': 'Innovation Financière',
+            'description': 'Cryptomonnaies, smart contracts et nouvelles opportunités numériques.'
+        }
+    ] %}
+
+    {% for feat in feature_list %}
+    <article class="feature">
+        <h3 class="feature-title">{{ feat.title }}</h3>
+        <p class="feature-description">{{ feat.description }}</p>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}

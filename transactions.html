@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Transactions{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Historique des Transactions</h2>
+    <form method="POST">
+        <input type="text" name="wallet-address" class="btn" placeholder="Entrez votre adresse BTC" required/>
+        <button type="submit" class="btn">Mettre à jour</button>
+    </form>
+    <div class="timeline">
+        {% for tx in transactions %}
+            <div class="transaction">
+                <p>{{ tx.type }} : {{ tx.amount }} BTC</p>
+                <p>Date : {{ tx.date }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <a href="/" class="btn back">Retour à l'accueil</a>
+</div>
+
+{% if error %}
+  <p style="color:red;">{{ error }}</p>
+{% endif %}
+
+{% endblock %}

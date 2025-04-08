@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}Scanner QR Code{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Votre QR Code Wallet</h2>
+
+    <div class="qr-container">
+        <div id="qr-code" class="qr-code"></div>
+        <div class="input-group">
+            <label for="wallet-address">Adresse du Wallet :</label>
+            <input type="text" id="wallet-address" placeholder="Entrez votre adresse du wallet">
+            <button class="btn btn-green" onclick="generateQRCode()">Générer le QR Code</button>
+        </div>
+    </div>
+
+    <h3>Scanner l'adresse du destinataire</h3>
+    <button id="scan-btn" class="btn btn-orange">Ouvrir la caméra</button>
+    
+    <div id="scanner-container" class="hidden"></div>
+    <div id="qr-result" class="qr-result hidden"></div>
+    <p id="error-message" class="error-message"></p>
+
+    <a href="{{ url_for('index') }}" class="btn btn-green">Retour à l'accueil</a>
+</div>
+
+<!-- Bibliothèques QR Code -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+
+<script>
+    function generateQRCode() {
+        let walletAddress = document.getElementById('wallet-address').value;
+        if (walletAddress) {
+            document.getElementById("qr-code").innerHTML = "";
+            new QRCode(document.getElementById("qr-code"), {
+                text: walletAddress,
+                width: 150,
+                height: 150
+            });
+        } else {
+            alert('Veuillez entrer une adresse de wallet.');
+        }
+    }
+
+    document.getElementById('scan-btn').addEventListener('click', function () {
+        let scannerContainer = document.getElementById("scanner-container");
+        let errorMessage = document.getElementById("error-message");
+        let qrResult = document.getElementById("qr-result");
+
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            errorMessage.innerText = "Erreur : votre navigateur ne supporte pas l'accès à la caméra.";
+            return;
+        }
+
+        navigator.mediaDevices.enumerateDevices()
+            .then(devices => {
+                let videoDevices = devices.filter(device => device.kind === "videoinput");
+                if (videoDevices.length === 0) {
+                    errorMessage.innerText = "Erreur : Aucune caméra détectée.";
+                    return;
+                }
+
+                scannerContainer.classList.remove("hidden");
+                scannerContainer.innerHTML = "";
+
+                const html5QrCode = new Html5Qrcode("scanner-container");
+
+                html5QrCode.start(
+                    { facingMode: "environment" },
+                    { fps: 10, qrbox: 250 },
+                    qrCodeMessage => {
+                        qrResult.classList.remove("hidden");
+                        qrResult.innerText = "Adresse du destinataire : " + qrCodeMessage;
+                        html5QrCode.stop();
+                    },
+                    error => {
+                        console.warn("Erreur de scan : ", error);
+                    }
+                ).catch(err => {
+                    errorMessage.innerText = "Impossible d'ouvrir la caméra : " + err;
+                });
+            })
+            .catch(err => {
+                errorMessage.innerText = "Erreur lors de la détection des appareils : " + err;
+            });
+    });
+</script>
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+    .qr-container {
+        margin-bottom: 20px;
+    }
+
+    .qr-code {
+        margin: 20px auto;
+        width: 150px;
+        height: 150px;
+    }
+
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .input-group input {
+        width: 80%;
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        text-align: center;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: bold;
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+        text-align: center;
+        border: none;
+        color: white;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-green {
+        background-color: #007e33;
+    }
+
+    .btn-green:hover {
+        background-color: #005d22;
+    }
+
+    .btn-orange {
+        background-color: #ff6600;
+    }
+
+    .btn-orange:hover {
+        background-color: #e65c00;
+    }
+
+    .qr-result {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.9);
+        color: black;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .error-message {
+        color: red;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,391 @@
+/* ============================= */
+/* 🌙 Global Styles - Base */
+/* ============================= */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    overflow-x: hidden;
+    text-align: left;
+}
+
+/* ============================= */
+/* 🔹 Navigation Bar */
+/* ============================= */
+.navbar {
+    background: #001f3f; /* Bleu foncé */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5); /* Effet néon bleu */
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    border-bottom: 2px solid #00ffff; /* Bordure néon */
+}
+
+/* 🔹 Titre avec effet néon */
+.navbar-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #00ffff;
+    text-shadow: 0 0 5px #00ffff, 0 0 15px #00ffff, 0 0 30px #0088ff;
+    letter-spacing: 1px;
+    transition: 0.3s ease;
+}
+
+/* Titre Highlight */
+.navbar-title .highlight {
+    color: #ff7b00; /* Orange */
+}
+
+/* ============================= */
+/* 🔽 Sous-menu de navigation */
+/* ============================= */
+.sub-navbar {
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 31, 63, 0.9); /* Fond sous-menu */
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none; /* Empêche les interactions lorsque caché */
+}
+
+/* Sous-menu visible */
+.sub-navbar.visible {
+    display: flex !important;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Sous-menu des liens */
+.sub-navbar ul {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Liens dans le sous-menu */
+.sub-navbar li a {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 10px;
+    transition: 0.3s ease;
+}
+
+.sub-navbar img {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 0 5px #00ffff);
+    transition: 0.3s ease-in-out;
+}
+
+.sub-navbar li a:hover img {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 10px #00ffff);
+}
+
+/* ============================= */
+/* 📱 Responsive Design */
+/* ============================= */
+@media (max-width: 768px) {
+    /* Affichage du bouton hamburger */
+    .toggle-btn {
+        display: block;
+    }
+
+    /* Cache la barre de navigation principale sur mobile */
+    .nav-list {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 31, 63, 0.9);
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+    }
+
+    /* Les liens deviennent verticaux sur mobile */
+    .nav-list li {
+        margin: 10px 0;
+    }
+
+    .nav-list li a {
+        padding: 12px;
+        font-size: 1.2rem;
+    }
+
+    /* Sous-menu qui devient responsive */
+    .sub-navbar {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .navbar-title {
+        font-size: 1.8rem;
+    }
+
+    /* Ajustement de la page pour compenser la navbar fixe */
+    .page-container {
+        padding-top: 80px;
+    }
+}
+
+/* ============================= */
+/* 🎨 Hero Section */
+/* ============================= */
+.hero {
+    background: url('/static/images/blockchain-bg.png') no-repeat center center/cover;
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.hero .content h1 {
+    font-size: 4rem;
+    color: cyan;
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #0ff, 0 0 20px #00f;
+    }
+    to {
+        text-shadow: 0 0 20px #0ff, 0 0 30px #00f;
+    }
+}
+
+.hero .content p {
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.hero .content .btn {
+    background: linear-gradient(45deg, #ff7b00, #378fee);
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+}
+
+.hero .content .btn:hover {
+    background: #00ffff;
+    transform: scale(1.05);
+    color: #1a1a2e;
+}
+
+/* ============================= */
+/* 🌟 Welcome Section */
+/* ============================= */
+.welcome-container {
+    margin-top: 120px;
+    width: 100%;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.welcome-title {
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.welcome-description {
+    font-size: 1.2rem;
+    color: #ddd;
+    margin-bottom: 40px;
+}
+
+/* ============================= */
+/* 🧭 Navigation Cards */
+/* ============================= */
+.navigation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    justify-items: center;
+    padding: 20px;
+}
+
+.nav-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-align: center;
+    max-width: 280px;
+    color: white;
+}
+
+.nav-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-card img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+.nav-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-subtitle {
+    font-size: 1rem;
+    color: #bbb;
+}
+
+/* ============================= */
+/* 🔹 Features Section */
+/* ============================= */
+.features {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 60px 20px;
+}
+
+.feature {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 12px;
+    width: 280px;
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.feature:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.feature-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #0ff, #00f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.feature-description {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* ============================= */
+/* 🏁 Footer */
+/* ============================= */
+footer {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+/* ============================= */
+/* 🎬 Animation pour Sous-menu */
+/* ============================= */
+.sub-navbar {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+.sub-navbar.visible {
+    display: flex !important;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* ============================= */
+/* 🧩 Global Layout Fix - Réactive */
+/* ============================= */
+
+/* Conteneur principal */
+.page-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 100px; /* pour compenser la navbar fixe */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Réduction padding-top si l'écran est petit */
+@media (max-width: 768px) {
+    .page-container {
+        padding-top: 80px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .hero .content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero .content p {
+        font-size: 1.2rem;
+    }
+
+    .welcome-title {
+        font-size: 2rem;
+    }
+
+    .feature {
+        width: 100%;
+        max-width: 300px;
+    }
+}

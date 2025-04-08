@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Solde{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre Solde</title>
+</head>
+<body>
+
+<section class="balance-section">
+    <a class="back-link" href="/"> ← Retour à l'accueil </a>
+    <div class="balance-container">
+        <h1 class="page-title">Votre Solde</h1>
+        <div class="balance-display-wrapper">
+            <div class="balance-card">
+                <p class="balance-label">Solde actuel</p>
+                <h2 class="balance-amount">{{ balance }}</h2>
+            </div>
+        </div>
+
+        <form method="POST" class="balance-form">
+            <label for="crypto-type">Type de crypto :</label>
+            <select name="crypto-type" id="crypto-type">
+                <option value="btc">Bitcoin (BTC)</option>
+                <option value="eth">Ethereum (ETH)</option>
+            </select>
+
+            <label for="wallet-address">Adresse du wallet :</label>
+            <input type="text" id="wallet-address" name="wallet-address" required>
+
+            <button type="submit">Vérifier le solde</button>
+        </form>
+
+        <div class="action-buttons"></div>
+    </div>
+
+    <div class="objectives-section">
+        <h2 class="objectives-title">Nos Objectifs</h2>
+        <div class="feature-row" data-stack-columns-at="tablet">
+            <div class="feature-column">
+                <div class="feature-card orange-accent">
+                    <img src="https://placehold.co/64x64" class="feature-icon" alt="Icône de sécurité"/>
+                    <h3 class="feature-title">Sécurité Maximale</h3>
+                    <p class="feature-description">
+                        Protection avancée de vos transactions avec un cryptage de bout en bout.
+                    </p>
+                </div>
+            </div>
+            <div class="feature-column">
+                <div class="feature-card blue-accent">
+                    <img src="https://placehold.co/64x64" class="feature-icon" alt="Icône de simplicité"/>
+                    <h3 class="feature-title">Simplicité d'Utilisation</h3>
+                    <p class="feature-description">
+                        Interface intuitive pour suivre votre solde et gérer vos transactions facilement.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+  (() => {
+    const transactionActions = [
+      { title: "Envoyer", subtitle: "Transférer des fonds", href: "/envoyer", icon: "https://placehold.co/40x40" },
+      { title: "Recevoir", subtitle: "Obtenir des paiements", href: "/recevoir", icon: "https://placehold.co/40x40" }
+    ];
+
+    const actionButtonsContainer = document.querySelector(".action-buttons");
+
+    transactionActions.forEach((action) => {
+      const actionButton = document.createElement("a");
+      actionButton.href = action.href;
+      actionButton.className = "action-button";
+      actionButton.setAttribute("aria-label", `${action.title} - ${action.subtitle}`);
+
+      const actionIcon = document.createElement("img");
+      actionIcon.src = action.icon;
+      actionIcon.className = "action-icon";
+      actionIcon.alt = "";
+
+      const actionContent = document.createElement("div");
+      actionContent.className = "action-content";
+
+      const actionTitle = document.createElement("span");
+      actionTitle.className = "action-title";
+      actionTitle.textContent = action.title;
+
+      const actionSubtitle = document.createElement("span");
+      actionSubtitle.className = "action-subtitle";
+      actionSubtitle.textContent = action.subtitle;
+
+      actionContent.appendChild(actionTitle);
+      actionContent.appendChild(actionSubtitle);
+      actionButton.appendChild(actionIcon);
+      actionButton.appendChild(actionContent);
+      actionButtonsContainer.appendChild(actionButton);
+    });
+  })();
+</script>
+
+</body>
+</html>
+
+{% if error %}
+  <p style="color:red;">{{ error }}</p>
+{% endif %}
+
+{% endblock %}

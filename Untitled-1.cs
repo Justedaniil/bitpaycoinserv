@@ -1,5 +1,7 @@
 bitpaycoin/
 │── app.py  (index.py)
+│── requirement.txt
+│── Procfile
 ├── static/
 │   ├── script.js
 │   ├── style.css

@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}Génération de Facture{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Génération de Facture</h2>
+
+    <div class="form-section">
+        <div class="input-group">
+            <label for="client">Nom du Client :</label>
+            <input type="text" id="client" placeholder="Entrez le nom du client">
+        </div>
+
+        <div class="input-group">
+            <label for="description">Description :</label>
+            <input type="text" id="description" placeholder="Ex : Achat de BTC">
+        </div>
+
+        <div class="input-group">
+            <label for="amount">Montant (BTC) :</label>
+            <input type="number" id="amount" placeholder="0.0000" step="0.00000001">
+        </div>
+
+        <div class="input-group">
+            <label for="date">Date :</label>
+            <input type="date" id="date">
+        </div>
+
+        <button class="btn btn-green" id="generate-btn">Générer Facture</button>
+    </div>
+
+    <div class="preview-section hidden" id="facture-container">
+        <div class="facture-card" id="facture">
+            <h3>Facture - Prévisualisation</h3>
+            <div class="facture-details">
+                <p><strong>Nom du Client :</strong> <span id="facture-client"></span></p>
+                <p><strong>Description :</strong> <span id="facture-description"></span></p>
+                <p><strong>Montant :</strong> <span id="facture-amount"></span> BTC</p>
+                <p><strong>Date :</strong> <span id="facture-date"></span></p>
+            </div>
+        </div>
+
+        <button class="btn btn-orange" id="download-btn" class="hidden">Télécharger en PDF</button>
+    </div>
+
+    <a href="{{ url_for('index') }}" class="btn btn-green">Retour à l'Accueil</a>
+</div>
+
+<!-- Bibliothèque pour la génération de PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+    document.getElementById('generate-btn').addEventListener('click', function () {
+        const client = document.getElementById('client').value;
+        const description = document.getElementById('description').value;
+        const amount = document.getElementById('amount').value;
+        const date = document.getElementById('date').value;
+
+        if (client && description && amount && date) {
+            document.getElementById('facture-client').innerText = client;
+            document.getElementById('facture-description').innerText = description;
+            document.getElementById('facture-amount').innerText = amount;
+            document.getElementById('facture-date').innerText = date;
+
+            document.getElementById('facture-container').classList.remove('hidden');
+            document.getElementById('download-btn').classList.remove('hidden');
+        } else {
+            alert('Veuillez remplir tous les champs.');
+        }
+    });
+
+    document.getElementById('download-btn').addEventListener('click', function () {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(18);
+        doc.text('Facture Bitcoin', 20, 20);
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(14);
+        doc.text(`Nom du Client: ${document.getElementById("facture-client").innerText}`, 20, 40);
+        doc.text(`Description: ${document.getElementById("facture-description").innerText}`, 20, 50);
+        doc.text(`Montant: ${document.getElementById("facture-amount").innerText} BTC`, 20, 60);
+        doc.text(`Date: ${document.getElementById("facture-date").innerText}`, 20, 70);
+
+        doc.save('facture_bitcoin.pdf');
+    });
+</script>
+
+<style>
+    .container {
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    .input-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        text-align: center;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: bold;
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+        border: none;
+        color: white;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-green {
+        background-color: #007e33;
+    }
+
+    .btn-green:hover {
+        background-color: #005d22;
+    }
+
+    .btn-orange {
+        background-color: #ff6600;
+    }
+
+    .btn-orange:hover {
+        background-color: #e65c00;
+    }
+
+    .preview-section {
+        margin-top: 20px;
+    }
+
+    .facture-card {
+        background-color: white;
+        color: black;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        max-width: 500px;
+        margin: 20px auto;
+        text-align: left;
+    }
+
+    .facture-details p {
+        margin: 10px 0;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+{% endblock %}
