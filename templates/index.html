@@ -18,25 +18,25 @@
             {% set features = [
                 {
                     'href': url_for('solde'),
-                    'icon': url_for('static', filename='images/wallet-icon.png'),
+                    'icon': url_for('static', filename='images/icone-portefeuille.png'),
                     'title': 'Voir le Solde',
                     'subtitle': 'Consultez votre balance actuelle'
                 },
                 {
                     'href': url_for('transactions'),
-                    'icon': url_for('static', filename='images/transactions-icon.png'),
+                    'icon': url_for('static', filename='images/icone-transactionflèche.png'),
                     'title': 'Historique',
                     'subtitle': 'Suivez vos transactions'
                 },
                 {
                     'href': url_for('scanner'),
-                    'icon': url_for('static', filename='images/qr-icon.png'),
+                    'icon': url_for('static', filename='images/icone-teléphone.png'),
                     'title': 'Scanner QR',
                     'subtitle': 'Scannez pour payer'
                 },
                 {
                     'href': url_for('facture'),
-                    'icon': url_for('static', filename='images/facture-icon.png'),
+                    'icon': url_for('static', filename='images/icone-facture.png'),
                     'title': 'Factures',
                     'subtitle': 'Gérez vos factures'
                 }
@@ -57,6 +57,7 @@
 
 <section class="hero">
     <div class="content">
+        <img src="{{ url_for('static', filename='images/icone-picture.png') }}" alt="Illustration blockchain" class="hero-image">
         <h2>RÉVOLUTION BLOCKCHAIN</h2>
         <p>Investissez dans la technologie décentralisée – Sécurité, transparence et liberté financière.</p>
         <a href="#features" class="btn">En savoir plus</a>
@@ -67,20 +68,24 @@
     {% set feature_list = [
         {
             'title': 'Sécurité & Transparence',
-            'description': 'Des transactions immuables et cryptées pour une confiance absolue.'
+            'description': 'Des transactions immuables et cryptées pour une confiance absolue.',
+            'image': url_for('static', filename='images/icone-picture.png')
         },
         {
             'title': 'Applications Décentralisées',
-            'description': 'Des services autonomes sans intermédiaire pour une économie plus libre.'
+            'description': 'Des services autonomes sans intermédiaire pour une économie plus libre.',
+            'image': url_for('static', filename='images/icone-picture.png')
         },
         {
             'title': 'Innovation Financière',
-            'description': 'Cryptomonnaies, smart contracts et nouvelles opportunités numériques.'
+            'description': 'Cryptomonnaies, smart contracts et nouvelles opportunités numériques.',
+            'image': url_for('static', filename='images/icone-picture.png')
         }
     ] %}
 
     {% for feat in feature_list %}
     <article class="feature">
+        <img src="{{ feat.image }}" alt="Image {{ feat.title }}" class="feature-image">
         <h3 class="feature-title">{{ feat.title }}</h3>
         <p class="feature-description">{{ feat.description }}</p>
     </article>
